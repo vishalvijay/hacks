@@ -16,15 +16,15 @@ result = []
 final_alps.each do |alp|
 	result << alp[:char]
 end
-i = final_alps.length-1
+i = result.length-1
 while(i >= 0) do
-	alp = alps[result[result.length-1-i]]
+	alp = alps[result[i]]
 	swapped = false
 	alp[:right].each do |char|
 		j = result.index(char)
-		if result.length-1-i > j
-			result[j] = result[result.length-1-i]
-			result[result.length-1-i] = char
+		if i > j
+			result[j] = result[i]
+			result[i] = char
 			swapped = true
 			break
 		end
