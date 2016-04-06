@@ -3,7 +3,6 @@ import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 class DigitsSquareSumPair {
 
@@ -21,13 +20,12 @@ class DigitsSquareSumPair {
 
 	private void addToMap(int sum, int length, int n) {
 		BigInteger currentTotalCombinations = sumMap.get(sum);
-		//TODO Bug fix
 		BigInteger totalCombinations = currentTotalCombinations != null ? currentTotalCombinations : BigInteger.ZERO;
 		int numberOfZero = 0;
-		while (length + numberOfZero < n) {
-			int finalLength = length - 1;
-			totalCombinations = totalCombinations.add(
-					fact(BigInteger.valueOf(finalLength + numberOfZero)).multiply(BigInteger.valueOf(finalLength)));
+		int newLenght;
+		while ((newLenght = length + numberOfZero) <= n) {
+			totalCombinations = totalCombinations.add(BigInteger.valueOf(length)
+					.multiply(totalPermutations(BigInteger.valueOf(newLenght - 1), newLenght - 1)));
 			numberOfZero++;
 		}
 		sumMap.put(sum, totalCombinations);
@@ -50,24 +48,20 @@ class DigitsSquareSumPair {
 	private BigInteger getPossibleSquareSumpAir(int n) {
 		generateSumPairMap(BigInteger.ZERO, 0, n, 1);
 		BigInteger total = BigInteger.ZERO;
-		for (Map.Entry<Integer, BigInteger> entry : sumMap.entrySet()) {
-			Integer key = entry.getKey();
-			BigInteger value = entry.getValue();
-			System.out.println(key + " => " + value);
-		}
 		for (BigInteger value : sumMap.values()) {
-			//TODO Bug fix
-			total.add(binomialCoefficient(value, 2));
+			total = total.add(totalCombinations(value, 2));
 		}
 		return total.mod(BigInteger.valueOf((long) Math.pow(10, 7) + 9));
 	}
 
-	private static BigInteger binomialCoefficient(final BigInteger total, final int limit) {
-		BigInteger ret = BigInteger.ONE;
-		for (int k = 0; k < limit; k++) {
-			ret = ret.multiply(total.subtract(BigInteger.valueOf(limit))).divide(BigInteger.valueOf(k + 1));
-		}
-		return ret;
+	private static BigInteger totalCombinations(BigInteger total, int limit) {
+		BigInteger limitBig = BigInteger.valueOf(limit);
+		if (total.compareTo(limitBig) == -1)
+			return BigInteger.ZERO;
+		if (limit == 0 || total.equals(limitBig))
+			return BigInteger.ONE;
+		BigInteger substactedBigInteger = total.subtract(BigInteger.ONE);
+		return totalCombinations(substactedBigInteger, limit - 1).add(totalCombinations(substactedBigInteger, limit));
 	}
 
 	private static BigInteger fact(BigInteger n) {
@@ -75,6 +69,10 @@ class DigitsSquareSumPair {
 			return BigInteger.ONE;
 		}
 		return n.multiply(fact(n.subtract(BigInteger.ONE)));
+	}
+
+	private static BigInteger totalPermutations(BigInteger total, int limit) {
+		return fact(total).divide(fact(total.subtract(BigInteger.valueOf(limit))));
 	}
 
 	public static void main(String args[]) throws Exception {
@@ -85,6 +83,5 @@ class DigitsSquareSumPair {
 		BigInteger total = new DigitsSquareSumPair().getPossibleSquareSumpAir(n);
 		System.out.println(total);
 		System.out.println(new Date().toString());
-		System.out.println(binomialCoefficient(BigInteger.valueOf(4), 2));
 	}
 }
