@@ -1,0 +1,1 @@
+Given sum. Find n continue number starting 1 to get the sum or more
