@@ -1,0 +1,4 @@
+O Marc a. Jorge have decided to encrypt their messages. They decide to write the message Ina 211) matrix. They secrNly decide on the number of columns and then write Me message column wise. For example, If the message Is istailupdealascoverymadee.y. and considering the number of columns as a, Marc would write down 
+
+arc then tends the message to Jorge by writing the letters In each row, ...Ng left-to-right and right-1.1.. So, the above message would be encrypted . dcadoetanyeeetrtdrasyrupyrny Write a method to recover the migIn message given the encrypted message and the number of columns. No need to take care of spaces. consider the message always fits Ina 20 matrix. 
+No. The string that Is being passed must not be modified and the extra space can only be used to store the resulting sting. Creating a 20 matrix Is NOT allowed. Violating any of these constraints will make the score void.
