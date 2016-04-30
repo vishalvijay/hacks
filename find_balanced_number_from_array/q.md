@@ -1,0 +1,1 @@
+Find a number p in an array which has exactly same number of greater value in the same array.
