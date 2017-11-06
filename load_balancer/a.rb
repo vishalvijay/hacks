@@ -69,4 +69,4 @@ n = gets.chomp.to_i
 print "Enter server loads: "
 load = gets.chomp.split(",").map(&:to_i)
 seconds = start load
-puts "\nOutput: 7 seconds"
+puts "\nOutput: #{seconds} seconds"
